@@ -37,18 +37,33 @@ html_dados = """<div _ngcontent-nyu-c7="" class="list-itens ct-itens-geral"><!--
 
 soup = BeautifulSoup(html_dados, 'html.parser')
 dados = soup.find_all("div", attrs={"class": "display-flex justify-between item-line width-full pd-left"})
-
+dados2 = soup.find_all("div", attrs={"class": "lb-nome lb-value"})
 covid = []
-for i in range (0,5):
-    dado = dados[i]
-    lista_dados = []
-    lista_dados.append(dado.find("div", class_="lb-nome nome-cit").get_text().strip())#nome
-    lista_dados.append(dado.find('b').get_text().strip())#casos
-    lista_dados.append(dado.find('b').get_text().strip())#obitos
-    covid.append(lista_dados)
+covid2 = []
 
-covid_df = pd.DataFrame(covid, columns=['Região', 'Casos', 'Óbitos'])
-covid_df = covid_df.replace({"\.": ""}, regex=True)
+for dado2 in dados2:
+    lista_dados2 = []
+    #lista_dados2.append(dado.find("div", class_="lb-nome nome-cit").get_text().strip())
+    lista_dados2.append(dado2.find("b").get_text().strip())
+    covid.append(lista_dados2)
+print(covid)
+'''
+for dado in dados:
+    lista_dados = []
+    lista_dados.append(dado.find("div", class_="lb-nome nome-cit").get_text().strip())
+    #lista_dados.append(dado.find("div", class_= "col-values").get_text().strip())
+    covid2.append(lista_dados)
+print(covid2)'''
+'''
+covid_df = pd.DataFrame(covid, columns=[ 'dados'])
+covid_df = covid_df.replace({
+    "\.": "",
+    ",": "",
+    "Casos": " ",
+    "Óbitos": " ",
+    "Incidência/100mil hab": " ",
+    "Mortalidade/100mil hab": " ",
+    "Atualização": " "}, regex=True)
 
 print(covid_df)
-covid_df.to_csv('covid_brasil.csv', index=False)
+covid_df.to_csv('covid_brasil.csv', index=False)'''
